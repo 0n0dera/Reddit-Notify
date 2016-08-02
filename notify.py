@@ -6,8 +6,9 @@ from pprint import pprint
 
 # Post class
 class Post:
-	def __init__(self, url):
+	def __init__(self, url, perma):
 		self.url = url
+		self.perma = perma
 
 # global vars.
 posts = []
@@ -34,7 +35,7 @@ def get_posts():
 			for p in new_posts:
 				if p.id not in visited_ids and any(keyword in p.title.lower() for keyword in keywords):
 					visited_ids.add(p.id)
-					posts.append(Post(p.url))
+					posts.append(Post(p.url,p.permalink))
 					print(counter+1, "- New post in r/" + sr, "at", time.strftime("%H:%M:%S"),": ",end="")
 					print(p.title)
 					counter += 1
@@ -55,11 +56,14 @@ main_thread.start()
 time.sleep(1)
 
 while True:
-	index = input()
-	if index == 'q':
+	index = input().strip().split(' ')
+	if index[0] == 'q':
 		print("Bye!")
 		break
-	elif is_num(index) and int(index) <= counter and int(index) > 0:
-		webbrowser.open(posts[int(index)-1].url)
+	elif is_num(index[0]) and int(index[0]) <= counter and int(index[0]) > 0:
+		if len(index) == 2 and index[1] == 'p':
+			webbrowser.open(posts[int(index[0])-1].perma)
+		else:
+			webbrowser.open(posts[int(index[0])-1].url)
 	else:
 		print("Invalid input.")
