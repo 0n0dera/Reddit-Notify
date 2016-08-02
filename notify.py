@@ -9,7 +9,7 @@ class Post:
 	def __init__(self, url):
 		self.url = url
 
-# global vars
+# global vars.
 posts = []
 counter = 0
 subreddits = list(map(str.lower,map(str.strip,input("Enter subreddits separated by commas (e.g. manga, anime): \n").split(','))))
