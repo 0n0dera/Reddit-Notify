@@ -1,0 +1,15 @@
+<h1>{{title}}</h1>
+
+<form action="{% url 'notify:getinfo' %}" method="post">
+{% csrf_token %}
+<input type='text' name='subreddit' />
+<br>
+<input type='text' name='keywords' />
+<input type='submit' value='Go' />
+</form>
+<br>
+<br>
+
+{{subreddit}}
+<br>
+{{keywords}}
