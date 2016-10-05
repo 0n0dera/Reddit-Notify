@@ -5,5 +5,6 @@ from . import views
 app_name = 'notify'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^getinfo/$', views.getinfo, name='getinfo'),
+    url(r'^addsubreddit/$', views.addsubreddit, name='addsubreddit'),
+    url(r'^addkeywords/(?P<subreddit>.*)$', views.addkeywords, name='addkeywords'),
 ]
