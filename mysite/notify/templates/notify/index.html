@@ -1,26 +1,37 @@
 <h1>{{title}}</h1>
 
-<form action="{% url 'notify:addsubreddit' %}" method="post">
+<form action="{% url 'notify:add_subreddit' %}" method="post">
 	{% csrf_token %}
 	<input type='text' name='subreddit' />
-	<br>
 	<input type='submit' value='Add subreddit' />
+	{{ error_msgs.sr_dupe_error_msg }}
 </form>
 <br>
 <br>
 
 {% for sr,keywords in subreddits.items %}
-	<b>Subreddit: {{sr}}</b>
-	<br>
+	<form action="{% url 'notify:del_subreddit' sr %}" method="post">
+		{% csrf_token %}
+		<b>Subreddit: {{sr}}</b>
+		<input type='submit' value='x' />
+	</form>
 	Keywords: 
+	<ul>
 	{% for kw in keywords %}
-		{{kw}},
+		<form action="{% url 'notify:del_keyword' sr kw %}" method="post">
+			<li>
+				{{kw}} 
+				{% csrf_token %}
+				<input type='submit' value='x' />
+			</li>
+		</form>
 	{% endfor %}
-	<form action="{% url 'notify:addkeywords' sr %}" method="post">
+	</ul>
+	<form action="{% url 'notify:add_keywords' sr %}" method="post">
 		{% csrf_token %}
 		<input type='text' name='keywords' />
-		<br>
 		<input type='submit' value='Add keywords' />
+		{{ error_msgs.kw_dupe_error_msg }}
 	</form>
 {% endfor %}
 <br>
